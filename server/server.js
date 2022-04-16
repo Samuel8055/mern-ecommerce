@@ -1,14 +1,20 @@
-const express = require("express")
-require("dotenv").config()
+const express = require("express");
+const connectDB = require("./config/db");
+require("dotenv").config();
+const productRoutes = require("./routes/productRoutes");
 
-const app = express()
+connectDB();
+const app = express();
+app.use(express.json());
 
-const port = process.env.PORT || 5001
+app.use("/api/products", productRoutes);
+
+const port = process.env.PORT || 5001;
 
 app.use("/", (req, res) => {
-  res.send("E-commerce app build!")
-})
+  res.send("E-commerce app build!");
+});
 
 app.listen(port, () => {
-  console.log(`server running on port ${port}`)
-})
+  console.log(`server running on port ${port}`);
+});
